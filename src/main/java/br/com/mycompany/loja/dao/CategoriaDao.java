@@ -2,7 +2,7 @@ package br.com.mycompany.loja.dao;
 
 import javax.persistence.EntityManager;
 
-import br.com.mycompany.loja.model.Produto;
+import br.com.mycompany.loja.model.Categoria;
 
 public class CategoriaDao {
 	private EntityManager em;
@@ -11,8 +11,8 @@ public class CategoriaDao {
 		this.em = em;
 	}
 	
-	public void cadastrar(Produto produto) {
-		this.em.persist(produto);
+	public void cadastrar(Categoria categoria) {
+		this.em.persist(categoria);
 	}
 	
 }

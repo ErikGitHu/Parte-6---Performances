@@ -5,8 +5,13 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import br.com.mycompany.loja.dao.ClienteDao;
+import br.com.mycompany.loja.dao.PedidoDao;
 import br.com.mycompany.loja.dao.ProdutoDao;
 import br.com.mycompany.loja.model.Categoria;
+import br.com.mycompany.loja.model.Cliente;
+import br.com.mycompany.loja.model.ItemPedido;
+import br.com.mycompany.loja.model.Pedido;
 import br.com.mycompany.loja.model.Produto;
 import br.com.mycompany.loja.util.JPAUtil;
 
@@ -15,18 +20,43 @@ public class Usuario {
 	public static void main(String[] args) {
 		licao_pratica_1_e_2();
 		
+		licao_pratica_3_e_4();
+		
+		EntityManager em = JPAUtil.getEntityManager();
+		ProdutoDao produtoDao = new ProdutoDao(em);
+		
+		PedidoDao pedidoDao = new PedidoDao(em);
+		ClienteDao clienteDao = new ClienteDao(em);
+		
+		
+		em.getTransaction().begin();
+		Produto p = produtoDao.consultarPorId(1l);
+		
+		Cliente cliente = new Cliente("Henrique", "12345678900");
+		Pedido pedido = new Pedido(cliente);
+		pedido.AdicionarItem(new ItemPedido(1, pedido, p));
+		
+		clienteDao.cadastrar(cliente);
+		pedidoDao.cadastrar(pedido);
+		
+		System.out.println(pedido.getValorTotal());
+		
+		em.getTransaction().commit();
+		em.close();
+	}
+
+	private static void licao_pratica_3_e_4() {
 		EntityManager em = JPAUtil.getEntityManager();
 		ProdutoDao produtoDao = new ProdutoDao(em);
 		
 		Produto p = produtoDao.consultarPorId(1l);
-		System.out.println(p.getNome());
+		//System.out.println(p.getNome());
 		
 		BigDecimal listarPorPreco = produtoDao.consultarPorPreco("Notebook");
-		System.out.println(listarPorPreco);
+		//System.out.println(listarPorPreco);
 		
 		List<Produto> listarTudo = produtoDao.consultarTudo();
-		listarTudo.forEach(t -> System.out.println(t));
-		
+		//listarTudo.forEach(t -> System.out.println(t));
 	}
 
 	private static void licao_pratica_1_e_2() {

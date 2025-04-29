@@ -29,7 +29,7 @@ public class ProdutoDao {
 	}
 	
 	public Produto consultarPorId(Long id) {
-		return this.em.find(Produto.class, id);
+		return em.find(Produto.class, id);
 	}
 	
 	public BigDecimal consultarPorPreco(String nome) {
