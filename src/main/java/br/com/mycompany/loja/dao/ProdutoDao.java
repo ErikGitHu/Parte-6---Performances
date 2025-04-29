@@ -41,7 +41,6 @@ public class ProdutoDao {
 	
 	public List<Produto> consultarTudo(){
 		String jpql = "SELECT p FROM Produto p";
-		return em.createQuery(jpql, Produto.class).getResultList();
-		
+		return em.createQuery(jpql, Produto.class).getResultList();	
 	}
 }

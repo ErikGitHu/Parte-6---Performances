@@ -14,14 +14,31 @@ import br.com.mycompany.loja.model.ItemPedido;
 import br.com.mycompany.loja.model.Pedido;
 import br.com.mycompany.loja.model.Produto;
 import br.com.mycompany.loja.util.JPAUtil;
+import br.com.mycompany.loja.vo.RelatorioDeVendasVO;
 
 public class Usuario {
 
 	public static void main(String[] args) {
 		licao_pratica_1_e_2();
 		
-		licao_pratica_3_e_4();
+		licao_pratica_3();
 		
+		licao_pratica_4();
+		
+		EntityManager em = JPAUtil.getEntityManager();
+		PedidoDao pedidoDao = new PedidoDao(em);
+		
+		BigDecimal somaDoTotalPedidos = pedidoDao.consultaPorAgregaçao();
+		System.out.println(somaDoTotalPedidos);
+		
+		em.getTransaction().begin();
+		
+		List<RelatorioDeVendasVO> relatorio = pedidoDao.relatorioDePedidos();
+		relatorio.forEach(System.out::println);
+		
+	}
+
+	private static void licao_pratica_4() {
 		EntityManager em = JPAUtil.getEntityManager();
 		ProdutoDao produtoDao = new ProdutoDao(em);
 		
@@ -45,7 +62,7 @@ public class Usuario {
 		em.close();
 	}
 
-	private static void licao_pratica_3_e_4() {
+	private static void licao_pratica_3() {
 		EntityManager em = JPAUtil.getEntityManager();
 		ProdutoDao produtoDao = new ProdutoDao(em);
 		
@@ -71,13 +88,12 @@ public class Usuario {
 		em.persist(produto);
 		produto.setNome("Notebook");
 		em.flush();
-		
 		em.clear();
 		
 		produto = em.merge(produto);
 		produto.setNome("Notebook");
 		em.flush();
-		
+	
 		em.remove(produto);
 		em.clear();
 	}
