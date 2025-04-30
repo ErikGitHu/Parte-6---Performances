@@ -25,6 +25,20 @@ public class Usuario {
 		
 		licao_pratica_4();
 		
+		licao_pratica_5();
+		
+		EntityManager em = JPAUtil.getEntityManager();
+		Pedido p = new Pedido();
+		PedidoDao pedidoDao = new PedidoDao(em);
+	
+		pedidoDao.consultarPorIdComCliente(1l);
+		
+		em.close();
+		System.out.println(p.getCliente().getNome());
+		
+	}
+
+	private static void licao_pratica_5() {
 		EntityManager em = JPAUtil.getEntityManager();
 		PedidoDao pedidoDao = new PedidoDao(em);
 		
@@ -34,8 +48,7 @@ public class Usuario {
 		em.getTransaction().begin();
 		
 		List<RelatorioDeVendasVO> relatorio = pedidoDao.relatorioDePedidos();
-		relatorio.forEach(System.out::println);
-		
+		//relatorio.forEach(System.out::println);
 	}
 
 	private static void licao_pratica_4() {
